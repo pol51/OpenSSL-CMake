@@ -223,7 +223,9 @@ if( WIN32 AND NOT CYGWIN )
   target_link_libraries( crypto ws2_32 crypt32 )
 endif()
 
-install( FILES ${EXHEADERS} DESTINATION include/openssl )
+install( DIRECTORY ${PROJECT_SOURCE_DIR}/include
+    DESTINATION ./ )
+
 install( TARGETS crypto
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
