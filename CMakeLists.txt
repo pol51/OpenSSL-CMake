@@ -54,3 +54,12 @@ install( FILES tools/c_hash tools/c_info tools/c_issuer tools/c_name tools/c_reh
 
 install( DIRECTORY doc DESTINATION ./ )
 
+# Generate the package target
+set( CPACK_GENERATOR ZIP TGZ )
+set( CPACK_PACKAGE_NAME "openssl-cmake" )
+set( CPACK_PACKAGE_VERSION_MAJOR 1  )
+set( CPACK_PACKAGE_VERSION_MINOR 0  )
+set( CPACK_PACKAGE_VERSION_PATCH 1e )
+
+include( CPack )
+
