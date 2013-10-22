@@ -192,7 +192,7 @@ add_submodule ( seed seed.c seed_ecb.c seed_cbc.c seed_cfb.c seed_ofb.c EXHEADER
   seed.h )
 add_submodule ( sha sha_dgst.c sha1dgst.c sha_one.c sha1_one.c sha256.c sha512.c
   EXHEADERS sha.h )
-add_submodule ( srp srp_lib.c srp_vfy.c srptest.c EXHEADERS srp.h srp_grps.h srp_lcl.h )
+add_submodule ( srp srp_lib.c srp_vfy.c EXHEADERS srp.h srp_grps.h srp_lcl.h )
 add_submodule ( stack stack.c EXHEADERS stack.h safestack.h )
 #add_submodule(store str_err.c str_lib.c str_meth.c str_mem.c
 #   EXHEADERS store.h )
