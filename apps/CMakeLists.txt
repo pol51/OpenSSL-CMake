@@ -24,7 +24,7 @@
 # SOFTWARE.
 
 
-include_directories ( .. ../include )
+include_directories ( AFTER SYSTEM .. ../include )
 add_definitions ( -DMONOLITH )
 
 set ( E_SRC openssl.c #
