@@ -35,7 +35,6 @@ set( CONF "
 #define OPENSSL_NO_JPAKE
 #define OPENSSL_NO_KRB5
 #define OPENSSL_NO_MD2
-#define OPENSSL_NO_RC5
 #define OPENSSL_NO_RFC3779
 #define OPENSSL_NO_STORE
 #define OPENSSL_NO_DYNAMIC_ENGINE
@@ -182,8 +181,8 @@ add_submodule ( rand md_rand.c randfile.c rand_lib.c rand_err.c rand_egd.c rand_
 add_submodule ( rc2 rc2_ecb.c rc2_skey.c rc2_cbc.c rc2cfb64.c rc2ofb64.c EXHEADERS
   rc2.h )
 add_submodule ( rc4 rc4_skey.c rc4_enc.c rc4_utl.c EXHEADERS rc4.h )
-#add_submodule(rc5 rc5_skey.c rc5_ecb.c rc5_enc.c rc5cfb64.c rc5ofb64.c
-#   EXHEADERS rc5.h )
+add_submodule( rc5 rc5_skey.c rc5_ecb.c rc5_enc.c rc5cfb64.c rc5ofb64.c
+  EXHEADERS rc5.h )
 add_submodule ( ripemd rmd_dgst.c rmd_one.c EXHEADERS ripemd.h )
 add_submodule ( rsa rsa_eay.c rsa_gen.c rsa_lib.c rsa_sign.c rsa_saos.c rsa_err.c
   rsa_pk1.c rsa_ssl.c rsa_none.c rsa_oaep.c rsa_chk.c rsa_null.c rsa_pss.c rsa_x931.c
