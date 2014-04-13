@@ -216,16 +216,20 @@ add_submodule ( x509v3 v3_bcons.c v3_bitst.c v3_conf.c v3_extku.c v3_ia5.c v3_li
 add_submodule ( . EXHEADERS crypto.h opensslv.h opensslconf.h ebcdic.h symhacks.h
   ossl_typ.h )
 
-add_library( crypto ${LIBSRC} ${OBJECTS_SRC} )
+if(BUILD_OBJECT_LIBRARY_ONLY)
+  add_library( crypto OBJECT ${LIBSRC} ${OBJECTS_SRC} )
+else()
+  add_library( crypto ${LIBSRC} ${OBJECTS_SRC} )
 
-if( WIN32 AND NOT CYGWIN )
-  target_link_libraries( crypto ws2_32 crypt32 )
+  if( WIN32 AND NOT CYGWIN )
+    target_link_libraries( crypto ws2_32 crypt32 )
+  endif()
+
+  install( DIRECTORY ${PROJECT_SOURCE_DIR}/include
+      DESTINATION ./ )
+
+  install( TARGETS crypto
+      RUNTIME DESTINATION bin
+      LIBRARY DESTINATION lib
+      ARCHIVE DESTINATION lib )
 endif()
-
-install( DIRECTORY ${PROJECT_SOURCE_DIR}/include
-    DESTINATION ./ )
-
-install( TARGETS crypto
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib )
