@@ -27,6 +27,8 @@
 project( openssl )
 cmake_minimum_required( VERSION 2.8.3 )
 
+set(BUILD_OBJECT_LIBRARY_ONLY OFF BOOL)
+
 add_definitions( -DOPENSSL_NO_ASM )
 
 if( WIN32 AND NOT CYGWIN )
@@ -44,22 +46,23 @@ endif()
 
 add_subdirectory( crypto )
 add_subdirectory( ssl )
-add_subdirectory( apps )
+if( NOT BUILD_OBJECT_LIBRARY_ONLY)
+  add_subdirectory( apps )
 
-install( FILES e_os2.h DESTINATION include/openssl )
+  install( FILES e_os2.h DESTINATION include/openssl )
 
-install( FILES tools/c_hash tools/c_info tools/c_issuer tools/c_name tools/c_rehash
-    FAQ LICENSE PROBLEMS README README.ASN1 README.ENGINE
-    DESTINATION share/openssl )
+  install( FILES tools/c_hash tools/c_info tools/c_issuer tools/c_name tools/c_rehash
+      FAQ LICENSE PROBLEMS README README.ASN1 README.ENGINE
+      DESTINATION share/openssl )
 
-install( DIRECTORY doc DESTINATION ./ )
+  install( DIRECTORY doc DESTINATION ./ )
 
-# Generate the package target
-set( CPACK_GENERATOR ZIP TGZ )
-set( CPACK_PACKAGE_NAME "openssl-cmake" )
-set( CPACK_PACKAGE_VERSION_MAJOR 1  )
-set( CPACK_PACKAGE_VERSION_MINOR 0  )
-set( CPACK_PACKAGE_VERSION_PATCH 1e )
+  # Generate the package target
+  set( CPACK_GENERATOR ZIP TGZ )
+  set( CPACK_PACKAGE_NAME "openssl-cmake" )
+  set( CPACK_PACKAGE_VERSION_MAJOR 1  )
+  set( CPACK_PACKAGE_VERSION_MINOR 0  )
+  set( CPACK_PACKAGE_VERSION_PATCH 1e )
 
-include( CPack )
-
+  include( CPack )
+endif()
