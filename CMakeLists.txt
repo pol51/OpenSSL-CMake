@@ -46,7 +46,9 @@ endif()
 
 add_subdirectory( crypto )
 add_subdirectory( ssl )
-if( NOT BUILD_OBJECT_LIBRARY_ONLY)
+if( BUILD_OBJECT_LIBRARY_ONLY)
+  file( COPY e_os2.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+else()
   add_subdirectory( apps )
 
   install( FILES e_os2.h DESTINATION include/openssl )
@@ -56,6 +58,8 @@ if( NOT BUILD_OBJECT_LIBRARY_ONLY)
       DESTINATION share/openssl )
 
   install( DIRECTORY doc DESTINATION ./ )
+
+  install( FILES e_os2.h DESTINATION include/openssl )
 
   # Generate the package target
   set( CPACK_GENERATOR ZIP TGZ )
