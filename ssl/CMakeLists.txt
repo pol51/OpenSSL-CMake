@@ -37,7 +37,9 @@ set ( LIBSRC s2_meth.c s2_srvr.c s2_clnt.c s2_lib.c s2_enc.c s2_pkt.c s3_meth.c 
   ssl_err.c kssl.c t1_reneg.c tls_srp.c s3_cbc.c d1_srtp.c )
 
 if(BUILD_OBJECT_LIBRARY_ONLY)
-  add_library( ssl OBJECT ${LIBSRC} )
+  set( LIBHDR ssl.h kssl.h ssl2.h ssl3.h tls1.h dtls1.h ssl23.h srtp.h)
+  file( COPY ${LIBHDR} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/../ )
+  add_library( ssl OBJECT ${LIBSRC} ${LIBHDR} )
 else()
   add_library( ssl ${LIBSRC} )
   target_link_libraries( ssl crypto )
