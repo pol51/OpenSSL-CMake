@@ -23,7 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-include_directories ( AFTER SYSTEM ../crypto .. ../include )
+include_directories ( BEFORE SYSTEM ../crypto .. ../include )
 
 if( BUILD_SHARED_LIBS )
     add_definitions ( -DOPENSSL_BUILD_SHLIBSSL )
