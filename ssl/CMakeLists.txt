@@ -23,8 +23,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-include_directories ( BEFORE SYSTEM ../crypto .. ../include )
-
 if( BUILD_SHARED_LIBS )
     add_definitions ( -DOPENSSL_BUILD_SHLIBSSL )
 endif()
@@ -38,7 +36,7 @@ set ( LIBSRC s2_meth.c s2_srvr.c s2_clnt.c s2_lib.c s2_enc.c s2_pkt.c s3_meth.c 
 
 if(BUILD_OBJECT_LIBRARY_ONLY)
   set( LIBHDR ssl.h kssl.h ssl2.h ssl3.h tls1.h dtls1.h ssl23.h srtp.h)
-  file( COPY ${LIBHDR} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/../ )
+  file( COPY ${LIBHDR} DESTINATION openssl )
   add_library( ssl OBJECT ${LIBSRC} ${LIBHDR} )
 else()
   add_library( ssl ${LIBSRC} )

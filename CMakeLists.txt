@@ -29,6 +29,8 @@ cmake_minimum_required( VERSION 2.8.3 )
 
 set(BUILD_OBJECT_LIBRARY_ONLY OFF BOOL)
 
+include_directories ( BEFORE SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/crypto ${CMAKE_CURRENT_BINARY_DIR}/ssl crypto . )
+
 add_definitions( -DOPENSSL_NO_ASM )
 
 if( WIN32 AND NOT CYGWIN )
