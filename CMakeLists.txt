@@ -62,7 +62,7 @@ else()
   set( CPACK_PACKAGE_NAME "openssl-cmake" )
   set( CPACK_PACKAGE_VERSION_MAJOR 1  )
   set( CPACK_PACKAGE_VERSION_MINOR 0  )
-  set( CPACK_PACKAGE_VERSION_PATCH 1e )
+  set( CPACK_PACKAGE_VERSION_PATCH 1u )
 
   include( CPack )
 endif()
