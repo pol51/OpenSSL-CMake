@@ -54,7 +54,7 @@ configure_file( ${CMAKE_CURRENT_BINARY_DIR}/opensslconf.h.cmake ${CMAKE_CURRENT_
 set( LIBSRC cryptlib.c mem.c mem_clr.c mem_dbg.c cversion.c ex_data.c cpt_err.c
   ebcdic.c uid.c o_time.c o_str.c o_dir.c o_init.c )
 
-include_directories( BEFORE SYSTEM ${CMAKE_CURRENT_BINARY_DIR} .. ../include . asn1 evp modes )
+include_directories( BEFORE SYSTEM asn1 evp modes )
 
 if( BUILD_SHARED_LIBS )
   add_definitions( -DOPENSSL_BUILD_SHLIBCRYPTO )
@@ -218,7 +218,7 @@ add_submodule( . EXHEADERS crypto.h opensslv.h opensslconf.h ebcdic.h symhacks.h
 
 if(BUILD_OBJECT_LIBRARY_ONLY)
   if( WIN32 AND MINGW AND NOT CYGWIN )
-	add_definitions(-DOPENSSL_THREADS -DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
+  add_definitions(-DOPENSSL_THREADS -DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
   endif( WIN32 AND MINGW AND NOT CYGWIN )
   add_library( crypto OBJECT ${LIBSRC} ${OBJECTS_SRC} )
   set( crypto_headers ${EXHEADERS} )
