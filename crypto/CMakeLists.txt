@@ -44,12 +44,12 @@ ${CONF}" )
 file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/opensslconf.h.cmake "${CONF}" )
 
 #~2DO: set BUILDINF_DATE to `date LC_ALL=C LC_TIME=C`
-configure_file( buildinf.h.cmake buildinf.h )
+configure_file( buildinf.h.cmake ${CMAKE_BINARY_DIR}/include/openssl/buildinf.h )
 
 if( WIN32 AND MINGW AND NOT CYGWIN )
   set( OPENSSL_EXPORT_VAR_AS_FUNCTION true )
 endif()
-configure_file( ${CMAKE_CURRENT_BINARY_DIR}/opensslconf.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/openssl/opensslconf.h )
+configure_file( ${CMAKE_CURRENT_BINARY_DIR}/opensslconf.h.cmake ${CMAKE_BINARY_DIR}/include/openssl/opensslconf.h )
 
 set( LIBSRC cryptlib.c mem.c mem_clr.c mem_dbg.c cversion.c ex_data.c cpt_err.c
   ebcdic.c uid.c o_time.c o_str.c o_dir.c o_init.c )
@@ -213,26 +213,23 @@ add_submodule( x509v3 v3_bcons.c v3_bitst.c v3_conf.c v3_extku.c v3_ia5.c v3_lib
   pcy_map.c pcy_tree.c pcy_lib.c v3_asid.c v3_addr.c EXHEADERS x509v3.h )
 # dirs not included: threads
 
-add_submodule( . EXHEADERS crypto.h opensslv.h opensslconf.h ebcdic.h symhacks.h
-  ossl_typ.h )
+add_submodule( . EXHEADERS crypto.h opensslv.h opensslconf.h ebcdic.h symhacks.h ossl_typ.h )
+
+set( crypto_headers ${EXHEADERS} )
+list( REMOVE_ITEM crypto_headers ./opensslconf.h )
+file( COPY ${crypto_headers} DESTINATION ${CMAKE_BINARY_DIR}/include/openssl )
 
 if(BUILD_OBJECT_LIBRARY_ONLY)
   if( WIN32 AND MINGW AND NOT CYGWIN )
-  add_definitions(-DOPENSSL_THREADS -DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
+    add_definitions(-DOPENSSL_THREADS -DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
   endif( WIN32 AND MINGW AND NOT CYGWIN )
   add_library( crypto OBJECT ${LIBSRC} ${OBJECTS_SRC} )
-  set( crypto_headers ${EXHEADERS} )
-  list( REMOVE_ITEM crypto_headers ./opensslconf.h )
-  file( COPY ${crypto_headers} DESTINATION openssl )
 else()
   add_library( crypto ${LIBSRC} ${OBJECTS_SRC} )
 
   if( WIN32 AND NOT CYGWIN )
     target_link_libraries( crypto ws2_32 crypt32 )
   endif()
-
-  install( DIRECTORY ${PROJECT_SOURCE_DIR}/include
-      DESTINATION ./ )
 
   install( TARGETS crypto
       RUNTIME DESTINATION bin

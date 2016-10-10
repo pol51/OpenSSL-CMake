@@ -27,9 +27,9 @@
 project( openssl )
 cmake_minimum_required( VERSION 2.8.3 )
 
-set(BUILD_OBJECT_LIBRARY_ONLY OFF BOOL)
+option(BUILD_OBJECT_LIBRARY_ONLY "build OpenSSL object libs only" OFF)
 
-include_directories ( BEFORE SYSTEM ${CMAKE_CURRENT_BINARY_DIR}/crypto ${CMAKE_CURRENT_BINARY_DIR}/ssl crypto . ${CMAKE_CURRENT_BINARY_DIR} )
+include_directories ( BEFORE SYSTEM . ./crypto ${CMAKE_BINARY_DIR}/include ${CMAKE_BINARY_DIR}/include/openssl )
 
 add_definitions( -DOPENSSL_NO_ASM )
 
@@ -45,7 +45,8 @@ endif()
 add_subdirectory( crypto )
 add_subdirectory( ssl )
 
-file( COPY e_os2.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/openssl )
+file( COPY e_os2.h DESTINATION ${CMAKE_BINARY_DIR}/include/openssl )
+
 if( NOT BUILD_OBJECT_LIBRARY_ONLY)
   add_subdirectory( apps )
 
@@ -57,7 +58,7 @@ if( NOT BUILD_OBJECT_LIBRARY_ONLY)
 
   install( DIRECTORY doc DESTINATION ./ )
 
-  install( FILES e_os2.h DESTINATION include/openssl )
+  install( DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include DESTINATION ./ )
 
   # Generate the package target
   set( CPACK_GENERATOR ZIP TGZ )
