@@ -217,8 +217,9 @@ add_submodule( . EXHEADERS crypto.h opensslv.h opensslconf.h ebcdic.h symhacks.h
   ossl_typ.h )
 
 if(BUILD_OBJECT_LIBRARY_ONLY)
+  add_definitions(-DOPENSSL_THREADS)
   if( WIN32 AND MINGW AND NOT CYGWIN )
-  add_definitions(-DOPENSSL_THREADS -DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
+    add_definitions(-DDSO_WIN32 -DWIN32_LEAN_AND_MEAN)
   endif( WIN32 AND MINGW AND NOT CYGWIN )
   add_library( crypto OBJECT ${LIBSRC} ${OBJECTS_SRC} )
   set( crypto_headers ${EXHEADERS} )
